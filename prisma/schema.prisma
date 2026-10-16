@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Berita Madrasah
+model News {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  excerpt   String
+  content   String
+  category  String   @default("Berita Madrasah")
+  image     String
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Galeri Dokumentasi
+model Gallery {
+  id         String   @id @default(cuid())
+  title      String
+  category   String   @default("Kegiatan")
+  image      String
+  photoCount Int      @default(1)
+  date       DateTime
+  createdAt  DateTime @default(now())
+}
+
+// Dewan Guru & Pimpinan
+model Teacher {
+  id       String  @id @default(cuid())
+  name     String
+  position String // Mapel guru / Jabatan pimpinan
+  role     String  @default("GURU") // KEPALA | TU | WAKABID | GURU
+  initials String?
+  order    Int     @default(99)
+}
+
+// Pengumuman
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  date      DateTime
+  isPinned  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// Aduan / PPID Layanan Aspirasi
+model Complaint {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  category  String   @default("Layanan")
+  message   String
+  status    String   @default("Baru") // Baru | Diproses | Selesai
+  createdAt DateTime @default(now())
+}
+
+// Statistik Pengunjung
+model VisitorStat {
+  id            String   @id @default(cuid())
+  date          DateTime @unique
+  todayCount    Int      @default(0)
+  yesterdayCount Int     @default(0)
+  monthCount    Int      @default(0)
+  totalCount    Int      @default(0)
+  onlineCount   Int      @default(0)
+}
