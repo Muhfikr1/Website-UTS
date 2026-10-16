@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 // Berita Madrasah
@@ -66,11 +67,11 @@ model Complaint {
 
 // Statistik Pengunjung
 model VisitorStat {
-  id            String   @id @default(cuid())
-  date          DateTime @unique
-  todayCount    Int      @default(0)
-  yesterdayCount Int     @default(0)
-  monthCount    Int      @default(0)
-  totalCount    Int      @default(0)
-  onlineCount   Int      @default(0)
+  id             String   @id @default(cuid())
+  date           DateTime @unique
+  todayCount     Int      @default(0)
+  yesterdayCount Int      @default(0)
+  monthCount     Int      @default(0)
+  totalCount     Int      @default(0)
+  onlineCount    Int      @default(0)
 }
